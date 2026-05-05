@@ -8,23 +8,32 @@ const pagesInp = document.querySelector("#pages-form");
 const checkbox = document.querySelector("#checkbox-form");
 const bookarr = [];
 
-function Book(title, author, pages, haveRead) {
-  const bookid = crypto.randomUUID();
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.haveRead = haveRead;
-  return {
-    ID: bookid,
-    title: this.title,
-    author: this.author,
-    pages: this.pages,
-    haveRead: this.haveRead,
-  };
+class Book {
+  constructor(title, author, pages, haveRead) {
+    this.bookid = crypto.randomUUID();
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.haveRead = haveRead;
+  }
 }
+// function Book(title, author, pages, haveRead) {
+//   const bookid = crypto.randomUUID();
+//   this.title = title;
+//   this.author = author;
+//   this.pages = pages;
+//   this.haveRead = haveRead;
+//   return {
+//     ID: bookid,
+//     title: this.title,
+//     author: this.author,
+//     pages: this.pages,
+//     haveRead: this.haveRead,
+//   };
+// }
 
 function addBookToLibrary(title, author, pages, haveRead) {
-  const bookObj = Book(title, author, pages, haveRead);
+  const bookObj = new Book(title, author, pages, haveRead);
   bookarr.push(bookObj);
   renderLibrary(bookarr);
 }
@@ -94,8 +103,8 @@ function removeBook(id) {
 }
 
 function toggleReadStatus(id) {
-  const book = bookarr.find(book => book.ID === id);
-  if(!book) return;
+  const book = bookarr.find((book) => book.ID === id);
+  if (!book) return;
 
   book.haveRead = !book.haveRead;
   renderLibrary(bookarr);
